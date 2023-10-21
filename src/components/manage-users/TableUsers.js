@@ -2,6 +2,7 @@ import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import UpdateUsersModal from './UpdateUsersModal';
+import DeleteUserModal from './DeleteUserModal';
 
 const TableUser = (props) => {
     
@@ -30,7 +31,7 @@ const TableUser = (props) => {
                     <td>{user.role}</td>
                     <td>
                         <UpdateUsersModal user={user} fetchListUser={props.fetchListUser}/>
-                        <button className="btn btn-danger mx-3">Delete</button>
+                        <DeleteUserModal user={user} fetchListUser={props.fetchListUser}/>
                     </td>
                 </tr>
                 )
