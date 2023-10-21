@@ -3,30 +3,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const TableUser = (props) => {
-    const [listUsers, setListUsers] = useState([]);
     
-    const getListUsers = async () => {
-        return await axios.get('http://localhost:8081/api/v1/participant/all');
-    }
-
-    const fetchListUser = async () => {
-        let res = await getListUsers();
-        if(res.data.EC === 0) {
-            setListUsers(res.data.DT);
-        }
-    }
-    
-    useEffect(() => {
-        fetchListUser();
-    }, []);
-
+    const {listUsers} = props;
 
     return (
         <>
         <Table striped bordered hover>
       <thead>
         <tr>
-          <th>No.</th>
+          <th>ID</th>
           <th>Username</th>
           <th>Email</th>
           <th>Role</th>
@@ -38,7 +23,7 @@ const TableUser = (props) => {
             listUsers.map((user, index) => {
                 return (
                 <tr key={``}>
-                    <td>{index+1}</td>
+                    <td>{user.id}</td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
                     <td>{user.roles}</td>

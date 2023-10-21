@@ -2,13 +2,34 @@ import AddUsersModal from "./AddUsersModal";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import TableUser from "./TableUsers";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const ManageUsers = () => {
+
+    const [listUsers, setListUsers] = useState([]);
+    const getListUsers = async () => {
+        return await axios.get('http://localhost:8081/api/v1/participant/all');
+    }
+
+    const fetchListUser = async () => {
+        let res = await getListUsers();
+        if(res.data.EC === 0) {
+            setListUsers(res.data.DT);
+        }
+    }
+    
+    useEffect(() => {
+        fetchListUser();
+    }, []);
+
+
+
     return (
         <div className="user-container">
-            <AddUsersModal/>
+            <AddUsersModal fetchListUser={fetchListUser}/>
             <div>
-                <TableUser/>  
+                <TableUser listUsers={listUsers}/>  
             </div>    
             <ToastContainer
                 position="top-right"

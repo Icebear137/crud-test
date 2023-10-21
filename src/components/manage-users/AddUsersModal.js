@@ -71,6 +71,7 @@ const AddUsersModal=(props) => {
         if(res && res.data && res.data.EC===0){
             toast.success('Add user successfully');
             handleClose();
+            await props.fetchListUser();
         }
         else{
             toast.error(res.data.EM);
