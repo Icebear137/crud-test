@@ -8,6 +8,7 @@ import axios from 'axios';
 const ManageUsers = () => {
 
     const [listUsers, setListUsers] = useState([]);
+
     const getListUsers = async () => {
         return await axios.get('http://localhost:8081/api/v1/participant/all');
     }
@@ -25,11 +26,13 @@ const ManageUsers = () => {
 
 
 
+
+
     return (
         <div className="user-container">
             <AddUsersModal fetchListUser={fetchListUser}/>
             <div>
-                <TableUser listUsers={listUsers}/>  
+                <TableUser listUsers={listUsers} fetchListUser={fetchListUser}/>  
             </div>    
             <ToastContainer
                 position="top-right"

@@ -1,6 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import UpdateUsersModal from './UpdateUsersModal';
 
 const TableUser = (props) => {
     
@@ -20,16 +21,16 @@ const TableUser = (props) => {
       </thead>
       <tbody>
         {listUsers && listUsers.length > 0 && 
-            listUsers.map((user, index) => {
+            listUsers.map((user) => { 
                 return (
                 <tr key={``}>
                     <td>{user.id}</td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
-                    <td>{user.roles}</td>
+                    <td>{user.role}</td>
                     <td>
-                        <button className="btn btn-primary mx-3">Edit</button>
-                        <button className="btn btn-danger">Delete</button>
+                        <UpdateUsersModal user={user} fetchListUser={props.fetchListUser}/>
+                        <button className="btn btn-danger mx-3">Delete</button>
                     </td>
                 </tr>
                 )
