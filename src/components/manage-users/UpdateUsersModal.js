@@ -59,7 +59,7 @@ const UpdateUsersModal=(props) => {
     }
 
 
-  const handleSubmit= async()=>{
+  const handleSubmit= async(e)=>{
 
         const formData = new FormData();
         formData.append('id', props.user.id);
@@ -71,7 +71,7 @@ const UpdateUsersModal=(props) => {
         if(res && res.data && res.data.EC===0){
             toast.success(res.data.EM);
             handleClose();
-            await props.fetchListUser();
+            await props.fetchListUserPaginate;
         }
         else{
             toast.error(res.data.EM);

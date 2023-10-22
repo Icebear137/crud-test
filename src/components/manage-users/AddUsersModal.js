@@ -48,7 +48,7 @@ const AddUsersModal=(props) => {
         );
     };
 
-  const handleSubmit= async()=>{
+  const handleSubmit= async(e)=>{
         //validate
         const isValidEmail= validateEmail(email);
         if(!isValidEmail){
@@ -71,7 +71,7 @@ const AddUsersModal=(props) => {
         if(res && res.data && res.data.EC===0){
             toast.success('Add user successfully');
             handleClose();
-            await props.fetchListUser();
+            await props.fetchListUserPaginate;
         }
         else{
             toast.error(res.data.EM);

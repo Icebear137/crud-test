@@ -1,38 +1,44 @@
 import AddUsersModal from "./AddUsersModal";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import TableUser from "./TableUsers";
+import TableUserPaginate from "./TableUserPaginate";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ManageUsers = () => {
-
+    const LIMIT_USER = 2;
     const [listUsers, setListUsers] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
 
-    const getListUsers = async () => {
-        return await axios.get('http://localhost:8081/api/v1/participant/all');
-    }
-
-    const fetchListUser = async () => {
-        let res = await getListUsers();
-        if(res.data.EC === 0) {
-            setListUsers(res.data.DT);
-        }
-    }
-    
     useEffect(() => {
-        fetchListUser();
+        fetchListUserPaginate(1);
     }, []);
 
+    
 
+    const getListUsersPaginate = async (page, limit) => {
+        return await axios.get(`http://localhost:8081/api/v1/participant?page=${page}&limit=${limit}`);
+    }
+
+    const fetchListUserPaginate = async (page) => {
+        let res = await getListUsersPaginate(page, LIMIT_USER);
+        if(res.data.EC === 0) {
+            setListUsers(res.data.DT.users);
+            setPageCount(res.data.DT.totalPages);
+        }
+    }
 
 
 
     return (
         <div className="user-container">
-            <AddUsersModal fetchListUser={fetchListUser}/>
+            <AddUsersModal fetchListUserPaginate={fetchListUserPaginate}/>
             <div>
-                <TableUser listUsers={listUsers} fetchListUser={fetchListUser}/>  
+                <TableUserPaginate 
+                    listUsers={listUsers}
+                    pageCount={pageCount}
+                    fetchListUserPaginate={fetchListUserPaginate}/>  
+
             </div>    
             <ToastContainer
                 position="top-right"

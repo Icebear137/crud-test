@@ -11,13 +11,13 @@ const DeleteUserModal=(props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const deleteUser = async() => {
+  const deleteUser = async(e) => {
     //call api delete user
     let res = await axios.delete(`http://localhost:8081/api/v1/participant`,{data:{id:props.user.id}});
     if(res && res.data && res.data.EC===0){
         toast.success(res.data.EM);
         handleClose();
-        await props.fetchListUser();
+        await props.fetchListUserPaginate;
     }
     else{
         toast.error(res.data.EM);
